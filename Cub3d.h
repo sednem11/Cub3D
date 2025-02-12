@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/01/23 12:54:37 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:29:42 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 # define WINDOW_LENGTH 900
 # define WINDOW_HEIGHT 600
-# define SCALE 32
+# define HEIGHT (WINDOW_HEIGHT / get()->map_y)
+# define LENGTH (WINDOW_LENGTH / get()->map_x)
 
 typedef struct s_image
 {
@@ -42,8 +43,8 @@ typedef struct s_textures
 	char	*so;
 	char	*we;
 	char	*ea;
-	char	*c;
-	char	*f;
+	int		*c;
+	int		*f;
 }	t_textures;
 
 
@@ -52,10 +53,13 @@ typedef struct s_data
     int		map_y;
 	int		map_x;
 	int		i;
+	int		y;
 	int		x;
 	int		j;
 	int		px;
 	int		py;
+	float	calcx;
+	float	calcy;
 	float	realpy;
 	float	realpx;
 	float	fov;
@@ -69,6 +73,8 @@ typedef struct s_data
 	float	delta_disty;
 	float	side_disty;
 	float	side_distx;
+	float	heightx;
+	float	heighty;
 	int		step_x;
 	int		step_y;
 	int		wallheight;
@@ -87,7 +93,10 @@ t_data	*get(void);
 
 void	parsing(char *name, int fd);
 void	mlx_start(void);
-// void    raycasting();
+int		check_start_map(char *line);
+void    raycasting();
+void	my_pixel_put(t_image **image, int x, int y, int color);
+int		create_trgb(int red, int green, int blue);
 
 
 #endif

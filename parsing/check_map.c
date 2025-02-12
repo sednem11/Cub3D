@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/01/23 14:01:23 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:43:37 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,53 @@ void	end_before()
 	exit(1);
 }
 
-
 void	mapy(int fd)
 {
 	int i;
 	char *temp;
 
 	i = 0;
+	temp = get_next_line(fd);
+	while(temp && check_start_map(ft_strtrim(temp, "\n ")) != 0)
+	{
+		free(temp);
+		temp = get_next_line(fd);
+	}
 	while(1)
 	{
-		temp = get_next_line(fd);
 		if (temp == NULL)
 			break;
 		i++;
 		free(temp);
+		temp = get_next_line(fd);
 	}
 	free(temp);
 	get()->map_y = i;
+}
+
+void	mapx(int fd)
+{
+	int i;
+	char *temp;
+
+	i = 0;
+	temp = get_next_line(fd);
+	while(temp && check_start_map(ft_strtrim(temp, "\n ")) != 0)
+	{
+		free(temp);
+		temp = get_next_line(fd);
+	}
+	while(1)
+	{
+		if (temp == NULL)
+			break;
+		if (i < (int)ft_strlen(temp))
+			i = (int)ft_strlen(temp);
+		free(temp);
+		temp = get_next_line(fd);
+	}
+	get()->map_x = i - 1;
+	free(temp);
 }
 
 void	create_map(char *name)
@@ -54,11 +84,17 @@ void	create_map(char *name)
 	j = 0;
 	fd = open(name, O_RDONLY);
 	mapy(open(name, O_RDONLY));
-	(get())->map = (char **)ft_calloc((get())->map_y + 1, sizeof(char *));
+	mapx(open(name, O_RDONLY));
+	get()->map = (char **)ft_calloc((get())->map_y + 1, sizeof(char *));
 	temp = get_next_line(fd);
+	while(check_start_map(ft_strtrim(temp, "\n ")) != 0)
+	{
+		free(temp);
+		temp = get_next_line(fd);
+	}
 	while (j < get()->map_y)
 	{
-		(get())->map[j] = ft_strtrim(temp, "\n ");
+		(get())->map[j] = ft_strtrim(temp, "\n");
 		j++;
 		free(temp);
 		temp = get_next_line(fd);
@@ -103,14 +139,13 @@ void	get_pangle(char *line)
 void	get_pxy(int fd)
 {
 	char *line;
-	get()->j = 0;
-	for(get()->i = 0; get()->i < 4; get()->i++)
-	{
-		line = get_next_line(fd);
-		free(line);
-		get()->j++;
-	}
+
 	line = get_next_line(fd);
+	while(check_start_map(ft_strtrim(line, "\n ")) != 0)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 	while(line != NULL)
 	{
 		get()->i = -1;
@@ -128,8 +163,8 @@ void	get_pxy(int fd)
 		line = get_next_line(fd);
 		get()->j++;
 	}
-	get()->realpx = get()->px;
-	get()->realpy = get()->py;
+	get()->realpx = get()->px + 0.5;
+	get()->realpy = get()->py + 0.5;
 	free(line);
 }
 
@@ -144,6 +179,39 @@ int	check_map(char *name, int fd)
     if (strcmp(&name[i], ".cub") != 0)
         return(1);
     return(0);
+}
+
+void	get_floor_cealing(char *line, int i)
+{
+	char **texture;
+
+	get()->i = 0;
+	get()->j = 0;
+	if (i == 1)
+	{
+		texture = ft_split(line, ',');
+		get()->texture->f = (int *)ft_calloc(4, sizeof(int));
+		while(get()->i < 3)
+		{
+			get()->texture->f[get()->i] = ft_atoi(texture[get()->i]);
+			get()->j += (int)ft_strlen(texture[get()->i] + 1);
+			free(texture[get()->i]);
+			get()->i++;
+		}
+	}
+	else if (i == 2)
+	{
+		texture = ft_split(line, ',');
+		get()->texture->c = (int *)ft_calloc(4, sizeof(int));
+		while(get()->i < 3)
+		{
+			get()->texture->c[get()->i] = ft_atoi(texture[get()->i]);
+			get()->j += (int)ft_strlen(texture[get()->i] + 1);
+			free(texture[get()->i]);
+			get()->i++;
+		}
+	}
+	free(texture);
 }
 
 void	get_texture_help(char *line, int i)
@@ -162,9 +230,9 @@ void	get_texture_help(char *line, int i)
 		else if (i == 3)
 			get()->texture->we = ft_strdup(&line[get()->j]);
 		else if (i == 4)
-			get()->texture->f = ft_strdup(&line[get()->j]);
+			get_floor_cealing(&line[get()->j], 1);
 		else if (i == 5)
-			get()->texture->c = ft_strdup(&line[get()->j]);
+			get_floor_cealing(&line[get()->j], 2);
 	}
 }
 

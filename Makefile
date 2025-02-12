@@ -6,13 +6,13 @@
 #    By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 13:05:50 by macampos          #+#    #+#              #
-#    Updated: 2025/01/23 10:06:48 by macampos         ###   ########.fr        #
+#    Updated: 2025/02/07 10:43:05 by macampos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Cub3D
 
-SRCS = main.c parsing/check_map.c mlx_handler/start.c #mlx_handler/raycasting.c
+SRCS = main.c parsing/check_map.c mlx_handler/start.c mlx_handler/raycasting.c #mlx_handler/raycasting.c
 
 OBJS = $(SRCS:.c=.o)
 
