@@ -194,16 +194,16 @@ void	change_player(int key)
 	if (directionangle > 360)
 		directionangle -= 360;
 	// checking wall colision
-		get()->realpy -= 0.1 * sin(directionangle * (3.1415926 / 180));
-		if (get()->realpy < get()->py && get()->map[get()->py - 1][get()->px] == '1')
-			get()->realpy = get()->py;
-		if (get()->realpy > get()->py + 1 && get()->map[get()->py + 1][get()->px] == '1')
-			get()->realpy = get()->py + 1;
-		get()->realpx += 0.1 * cos(directionangle * (3.1415926 / 180));
-		if (get()->realpx < get()->px && get()->map[get()->py][get()->px - 1] == '1')
-			get()->realpx = get()->px;
-		if (get()->realpx > get()->px + 1 && get()->map[get()->py][get()->px + 1] == '1')
-			get()->realpx = get()->px + 1;
+	get()->realpy -= 0.1 * sin(directionangle * (3.1415926 / 180));
+	get()->realpx += 0.1 * cos(directionangle * (3.1415926 / 180));
+	if (get()->realpy < get()->py && get()->map[get()->py - 1][get()->px] == '1')
+		get()->realpy = get()->py;
+	if (get()->realpy > get()->py + 1 && get()->map[get()->py + 1][get()->px] == '1')
+		get()->realpy = get()->py + 1;
+	if (get()->realpx < get()->px && get()->map[get()->py][get()->px - 1] == '1')
+		get()->realpx = get()->px;
+	if (get()->realpx > get()->px + 1 && get()->map[get()->py][get()->px + 1] == '1')
+		get()->realpx = get()->px + 1;
 	if (get()->realpx < get()->px)
 	{
 		get()->map[get()->py][get()->px] = '2';

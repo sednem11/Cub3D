@@ -28,28 +28,33 @@ float   cast_single_ray()
     get()->ray_dx = cos(get()->ray_angle * (3.1415926 / 180));
     get()->ray_dy = sin(get()->ray_angle * (3.1415926 / 180));
     get()->step_x = (get()->ray_dx < 0) ? -1 : 1;
-    get()->step_y = (get()->ray_dy < 0) ? -1 : 1;
-    get()->side_distx = (get()->step_x > 0) ? (ceil(get()->calcx) - get()->calcx) : (get()->calcx - floor(get()->calcx));
-    get()->side_disty = (get()->step_y > 0) ? (ceil(get()->calcy) - get()->calcy) : (get()->calcy - floor(get()->calcy));
+    get()->step_y = (get()->ray_dy < 0) ? 1 : -1;
+    get()->side_distx = (get()->step_x > 0) ? ((int)(get()->calcx + 1) - get()->calcx) : (get()->calcx - (int)get()->calcx);
+    get()->side_disty = (get()->step_y > 0) ? ((int)(get()->calcy + 1) - get()->calcy) : (get()->calcy - (int)get()->calcy);
     dist_x = get()->side_distx / fabs(get()->ray_dx);
     dist_y = get()->side_disty / fabs(get()->ray_dy);
     while (1) {
+        // printf("sidex%f\n", get()->side_distx);
+        // printf("sidey%f\n", get()->side_disty);
+        // printf("distx%f\n", dist_x);
+        // printf("disty%f\n", dist_y);
         if (dist_x < dist_y) {
-            printf("%c\n", '1');
+            printf("1\n");
             get()->calcx += get()->step_x;
-            dist_x += fabs(1 / get()->ray_dx);
             if (get()->map[(int)get()->calcy][(int)get()->calcx] == '1') {
                 // printf("%f, %c, x%i, y%i\n", dist_x, get()->map[(int)get()->calcy][(int)get()->calcx], (int)get()->calcx, (int)get()->calcy);
                 return fabs(dist_x);
             }
+            dist_x += fabs(1 / get()->ray_dx);
         } else {
-            printf("%c\n", '2');
-            get()->calcy -= get()->step_y;
-            dist_y += fabs(1 / get()->ray_dy);
+            printf("2\n");
+            // get()->calcy = (int)get()->calcy;
+            get()->calcy += get()->step_y;
             if (get()->map[(int)get()->calcy][(int)get()->calcx] == '1') {
                 // printf("%f, %c, x%i, y%i\n", dist_y, get()->map[(int)py][(int)px], (int)px, (int)py);
                 return fabs(dist_y);
             }
+            dist_y += fabs(1 / get()->ray_dy);
         }
     }
 }
@@ -95,7 +100,7 @@ float   cast_single_ray()
 
 void    raycasting()
 {
-    get()->angle_increment = get()->fov / (float)WINDOW_LENGTH;
+    get()->angle_increment = get()->fov / WINDOW_LENGTH;
     for(get()->x = 0; get()->x < WINDOW_LENGTH; get()->x++)    
     {
         get()->ray_angle = get()->player_angle + (get()->fov / 2) - (get()->x * get()->angle_increment);
