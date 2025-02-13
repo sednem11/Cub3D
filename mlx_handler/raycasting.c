@@ -1,5 +1,44 @@
 #include "../Cub3d.h"
 
+int findx(t_image *image, int side)
+{
+    float z;
+    int x;
+
+    if (get()->step_x > 0 && (side == 2 || side == 3))
+        z = get()->ray_dx * get()->distance + get()->realpx;
+    else if (get()->step_x < 0 && (side == 2 || side == 3))
+        z = get()->realpx - fabs(get()->ray_dx * get()->distance);
+    else if (get()->step_y < 0 && (side == 1 || side == 4))
+    {
+        z = get()->realpy - get()->ray_dy * get()->distance;
+        printf("%f\n", z);
+    }
+    else if (get()->step_y > 0 && (side == 1 || side == 4))
+        z = get()->realpy + fabs(get()->ray_dx * get()->distance);
+    z = z - (int)z;
+    x = z * image->width;
+    return(x);
+}
+
+int findy(t_image *image, int height)
+{
+    (void)height;
+    float z;
+    int x;
+
+    if (get()->step_y < 0)
+    {
+        z = get()->realpy - get()->ray_dy * get()->distance;
+        printf("%f\n", z);
+    }
+    else
+        z = get()->realpy + fabs(get()->ray_dx * get()->distance);
+    z = z - (int)z;
+    x = z * image->height;
+    return(x);
+}
+
 void draw_vertical_line(int x, int height, int side)
 {
     int start = (WINDOW_HEIGHT / 2) - (height / 2);
@@ -14,7 +53,12 @@ void draw_vertical_line(int x, int height, int side)
         else if (side == 1)
             my_pixel_put(&get()->images[3], x, y, create_trgb(0, 200, 0));
         else if (side == 2)
+        {
+            findx(get()->images[0], side);
+            // printf("%i\n", findy(get()->images[0], height));
             my_pixel_put(&get()->images[3], x, y, create_trgb(200, 0, 0));
+            // my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[0], findx(get()->images[0]), findy(get()->images[0], height), 0));
+        }
         else if (side == 3)
             my_pixel_put(&get()->images[3], x, y, create_trgb(0, 0, 200));
     }

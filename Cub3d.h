@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/12 16:23:50 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:49:42 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int		check_start_map(char *line);
 void    raycasting();
 void	my_pixel_put(t_image **image, int x, int y, int color);
 int		create_trgb(int red, int green, int blue);
+int		my_pixel_get(t_image *image, int x, int y, int i);
 
 
 #endif
