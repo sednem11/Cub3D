@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/12 13:58:54 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:37:41 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,13 +223,13 @@ void	get_texture_help(char *line, int i)
 	if (line[get()->j])
 	{
 		if (i == 0)
-			get()->texture->no = ft_strdup(&line[get()->j]);
+			get()->texture->no = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
 		else if (i == 1)
-			get()->texture->ea = ft_strdup(&line[get()->j]);
+			get()->texture->ea = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
 		else if (i == 2)
-			get()->texture->so = ft_strdup(&line[get()->j]);
+			get()->texture->so = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
 		else if (i == 3)
-			get()->texture->we = ft_strdup(&line[get()->j]);
+			get()->texture->we = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
 		else if (i == 4)
 			get_floor_cealing(&line[get()->j], 1);
 		else if (i == 5)

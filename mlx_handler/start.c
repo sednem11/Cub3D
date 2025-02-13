@@ -124,6 +124,27 @@ void	create_image_addr(t_image *image)
 	}
 }
 
+void	create_image_ptr2(t_image **image, int i)
+{
+	if (i == 0)
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->no, &(*image)->width, &(*image)->height);
+	if (i == 1)
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->so, &(*image)->width, &(*image)->height);
+	if (i == 2)
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->ea, &(*image)->width, &(*image)->height);
+	if (i == 3)
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->we, &(*image)->width, &(*image)->height);
+	if (!(*image)->img)
+	{
+		printf("%i\n", i);
+		ft_printf("AHHH\n");
+		ft_printf("ERROR\n");
+		// mlx_end(0);
+		exit(1);
+	}
+	create_image_addr(*image);
+}
+
 void	create_image_ptr(t_image **image, int width, int height)
 {
 	(*image)->img = mlx_new_image(get()->mlx, width, height);
@@ -167,16 +188,18 @@ void	init_mlx_window_images(void)
 {
 	get()->i = 0;
 	get()->window = mlx_new_window(get()->mlx, WINDOW_LENGTH, WINDOW_HEIGHT, "Cub_3D");
-	get()->images = (t_image **)ft_calloc(5, sizeof(t_image *));
-	while(get()->i < 5)
+	get()->images = (t_image **)ft_calloc(8, sizeof(t_image *));
+	while(get()->i < 8)
 	{
 		get()->images[get()->i] = (t_image *)malloc(sizeof(t_image));
 		get()->i++;
 	}
-	create_solid_color_image(&get()->images[0], create_trgb(get()->texture->f[0], get()->texture->f[1], get()->texture->f[2]));
-	create_solid_color_image(&get()->images[1], create_trgb(get()->texture->c[0], get()->texture->c[1], get()->texture->c[2]));
+	create_image_ptr2(&get()->images[0], 0);
+	create_image_ptr2(&get()->images[1], 1);
 	create_image_ptr(&get()->images[2], WINDOW_LENGTH, WINDOW_HEIGHT);
 	create_image_ptr(&get()->images[3], WINDOW_LENGTH, WINDOW_HEIGHT);
+	create_image_ptr2(&get()->images[4], 2);
+	create_image_ptr2(&get()->images[5], 3);
 }
 
 void	change_player(int key)

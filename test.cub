@@ -1,7 +1,7 @@
-NO textures/
-SO textures/
-WE textures/
-EA textures/
+NO textures/blue.xpm
+SO textures/green.xpm
+EA textures/Purple.xpm
+WE textures/Purple.xpm
 
 F 0,0,0
 C 0,0,0

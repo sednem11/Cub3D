@@ -95,7 +95,6 @@ int check_side()
 void    raycasting()
 {
     get()->angle_increment = get()->fov / WINDOW_LENGTH;
-    printf("%f\n", get()->player_angle);
     for(get()->x = 0; get()->x < WINDOW_LENGTH; get()->x++)    
     {
         get()->ray_angle = get()->player_angle + (get()->fov / 2) - (get()->x * get()->angle_increment);
