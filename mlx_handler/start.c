@@ -119,8 +119,7 @@ void	create_image_addr(t_image *image)
 	if (!image->image_pixel)
 	{
 		ft_printf("image_pixel");
-		// mlx_end(0);
-		exit(1);
+		end_before();
 	}
 }
 
@@ -138,8 +137,7 @@ void	create_image_ptr2(t_image **image, int i)
 	{
 		printf("%i\n", i);
 		ft_printf("ERROR\n");
-		// mlx_end(0);
-		exit(1);
+		end_before();
 	}
 	create_image_addr(*image);
 }
@@ -150,8 +148,7 @@ void	create_image_ptr(t_image **image, int width, int height)
 	if (!(*image)->img)
 	{
 		ft_printf("ERROR\n");
-		// mlx_end(0);
-		exit(1);
+		end_before();
 	}
 	create_image_addr(*image);
 }
@@ -168,8 +165,7 @@ void create_solid_color_image(t_image **image, int color)
     if (!(*image)->img)
 	{
         printf("ERROR creating image\n");
-        // mlx_end(1);
-        exit(1);
+        end_before();
     }
     create_image_addr(*image);
     pixel_data = (int *)(*image)->image_pixel;
