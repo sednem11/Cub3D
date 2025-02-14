@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/13 18:37:41 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/14 22:14:14 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cub3d.h"
 
-void	end_before()
+int	end_before()
 {
 	int i;
 
@@ -24,6 +24,7 @@ void	end_before()
 	}
 	free(get()->map);
 	exit(1);
+	return(1);
 }
 
 void	mapy(int fd)

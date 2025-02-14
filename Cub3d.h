@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/13 18:49:42 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:00:01 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ void    raycasting();
 void	my_pixel_put(t_image **image, int x, int y, int color);
 int		create_trgb(int red, int green, int blue);
 int		my_pixel_get(t_image *image, int x, int y, int i);
-
+int		end_before();
 
 #endif

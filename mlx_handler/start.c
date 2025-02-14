@@ -137,7 +137,6 @@ void	create_image_ptr2(t_image **image, int i)
 	if (!(*image)->img)
 	{
 		printf("%i\n", i);
-		ft_printf("AHHH\n");
 		ft_printf("ERROR\n");
 		// mlx_end(0);
 		exit(1);
@@ -255,8 +254,8 @@ void	change_player(int key)
 
 int	handle_input(int keysym)
 {
-	// if (keysym == XK_Escape)
-	// 	mlx_end(1);
+	if (keysym == XK_Escape)
+		end_before();
 	if (keysym == XK_w)
 		change_player(1);
 	if (keysym == XK_a)
@@ -279,8 +278,7 @@ void	mlx_start(void)
 	get()->mlx = mlx_init();
 	init_mlx_window_images();
 	rendering_map();
-	// mlx_hook(get()->window, 17, 0, last_handel_input, NULL);
 	mlx_hook(get()->window, 2, (1L << 0), handle_input, NULL);
-	// mlx_key_hook(get()->window, handel_input2, NULL);
+	mlx_hook(get()->window, 17, 0, end_before, NULL);
 	mlx_loop(get()->mlx);
 }
