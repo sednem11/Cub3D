@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/17 12:36:10 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:14:10 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,44 @@ int	end_before()
 	int i;
 
 	i = 0;
-	while(i < get()->map_y)
+	if (get()->map)
 	{
-		free(get()->map[i]);
-		i++;
+		while(i < get()->map_y)
+		{
+			free(get()->map[i]);
+			i++;
+		}
+		free(get()->map);
 	}
-	free(get()->map);
-	free(get()->texture->c);
-	free(get()->texture->f);
-	free(get()->texture->ea);
-	free(get()->texture->no);
-	free(get()->texture->so);
-	free(get()->texture->we);
-	free(get()->texture);
+	if (get()->texture)
+	{
+		free(get()->texture->c);
+		free(get()->texture->f);
+		free(get()->texture->ea);
+		free(get()->texture->no);
+		free(get()->texture->so);
+		free(get()->texture->we);
+		free(get()->texture);
+	}
 	i = 0;
-	while(i < 6)
+	if (get()->images)
 	{
-		free(get()->images[i]);
-		i++;
+		while(get()->images[i] != NULL)
+		{
+			if (get()->images[i]->img)
+				mlx_destroy_image(get()->mlx, get()->images[i]->img);
+			free(get()->images[i]);
+			i++;
+		}
+		free(get()->images);
 	}
-	free(get()->mlx);
-	free(get()->window);
-	free(get()->images);
+	if (get()->mlx)
+	{
+		if (get()->window)
+			mlx_destroy_window(get()->mlx, get()->window);
+		mlx_destroy_display(get()->mlx);
+		free(get()->mlx);
+	}
 	exit(1);
 	return(1);
 }
@@ -47,13 +63,17 @@ void	mapy(int fd)
 {
 	int i;
 	char *temp;
+	char *str;
 
 	i = 0;
 	temp = get_next_line(fd);
-	while(temp && check_start_map(ft_strtrim(temp, "\n ")) != 0)
+	str = ft_strtrim(temp, "\n ");
+	while(temp && check_start_map(str) != 0)
 	{
 		free(temp);
+		free(str);
 		temp = get_next_line(fd);
+		str = ft_strtrim(temp, "\n ");
 	}
 	while(1)
 	{
@@ -63,6 +83,7 @@ void	mapy(int fd)
 		free(temp);
 		temp = get_next_line(fd);
 	}
+	free(str);
 	free(temp);
 	get()->map_y = i;
 }
@@ -71,13 +92,17 @@ void	mapx(int fd)
 {
 	int i;
 	char *temp;
+	char *str;
 
 	i = 0;
 	temp = get_next_line(fd);
-	while(temp && check_start_map(ft_strtrim(temp, "\n ")) != 0)
+	str = ft_strtrim(temp, "\n ");
+	while(temp && check_start_map(str) != 0)
 	{
 		free(temp);
+		free(str);
 		temp = get_next_line(fd);
+		str = ft_strtrim(temp, "\n ");
 	}
 	while(1)
 	{
@@ -90,11 +115,13 @@ void	mapx(int fd)
 	}
 	get()->map_x = i - 1;
 	free(temp);
+	free(str);
 }
 
 void	create_map(char *name)
 {
 	char	*temp;
+	char	*str;
 	int 	fd;
 	int		j;
 
@@ -104,10 +131,13 @@ void	create_map(char *name)
 	mapx(open(name, O_RDONLY));
 	get()->map = (char **)ft_calloc((get())->map_y + 1, sizeof(char *));
 	temp = get_next_line(fd);
-	while(check_start_map(ft_strtrim(temp, "\n ")) != 0)
+	str = ft_strtrim(temp, "\n ");
+	while(check_start_map(str) != 0)
 	{
 		free(temp);
+		free(str);
 		temp = get_next_line(fd);
+		str = ft_strtrim(temp, "\n ");
 	}
 	while (j < get()->map_y)
 	{
@@ -118,6 +148,7 @@ void	create_map(char *name)
 	}
 	get()->map[get()->map_y] = NULL;
 	free(temp);
+	free(str);
 }
 
 void	floodfill(char **map, int x, int y)
@@ -155,13 +186,17 @@ void	get_pangle(char *line)
 
 void	get_pxy(int fd)
 {
-	char *line;
+	char	*line;
+	char	*str;
 
 	line = get_next_line(fd);
-	while(check_start_map(ft_strtrim(line, "\n ")) != 0)
+	str = ft_strtrim(line, "\n ");
+	while(check_start_map(str) != 0)
 	{
 		free(line);
+		free(str);
 		line = get_next_line(fd);
+		str = ft_strtrim(line, "\n ");
 	}
 	while(line != NULL)
 	{
@@ -183,6 +218,7 @@ void	get_pxy(int fd)
 	get()->realpx = get()->px + 0.5;
 	get()->realpy = get()->py + 0.5;
 	free(line);
+	free(str);
 }
 
 int	check_map(char *name, int fd)
@@ -234,23 +270,27 @@ void	get_floor_cealing(char *line, int i)
 
 void	get_texture_help(char *line, int i)
 {
+	char *str;
+	
 	get()->j = 2;
 	while(line[get()->j] && line[get()->j] == ' ')
 		get()->j++;
 	if (line[get()->j])
 	{
+		str = ft_strtrim(&line[get()->j], "\n");
 		if (i == 0)
-			get()->texture->no = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
+			get()->texture->no = ft_strdup(str);
 		else if (i == 1)
-			get()->texture->ea = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
+			get()->texture->ea = ft_strdup(str);
 		else if (i == 2)
-			get()->texture->so = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
+			get()->texture->so = ft_strdup(str);
 		else if (i == 3)
-			get()->texture->we = ft_strdup(ft_strtrim(&line[get()->j], "\n"));
+			get()->texture->we = ft_strdup(str);
 		else if (i == 4)
 			get_floor_cealing(&line[get()->j], 1);
 		else if (i == 5)
 			get_floor_cealing(&line[get()->j], 2);
+		free(str);
 	}
 }
 
@@ -262,6 +302,7 @@ void	get_textures(int fd)
 	get()->texture = (t_textures *)ft_calloc(1, sizeof(t_textures));
 	while(line != NULL)
 	{
+		
 		get()->i = -1;
 		while(get()->i < (int)ft_strlen(line) && get()->i++)
 		{

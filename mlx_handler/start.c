@@ -184,9 +184,10 @@ void	init_mlx_window_images(void)
 	get()->i = 0;
 	get()->window = mlx_new_window(get()->mlx, WINDOW_LENGTH, WINDOW_HEIGHT, "Cub_3D");
 	get()->images = (t_image **)ft_calloc(8, sizeof(t_image *));
-	while(get()->i < 8)
+	while(get()->i < 7)
 	{
-		get()->images[get()->i] = (t_image *)malloc(sizeof(t_image));
+		get()->images[get()->i] = (t_image *)calloc(1, sizeof(t_image));
+		get()->images[get()->i]->img = NULL;
 		get()->i++;
 	}
 	create_image_ptr2(&get()->images[0], 0);
