@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/14 22:14:14 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:36:10 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ int	end_before()
 		i++;
 	}
 	free(get()->map);
+	free(get()->texture->c);
+	free(get()->texture->f);
+	free(get()->texture->ea);
+	free(get()->texture->no);
+	free(get()->texture->so);
+	free(get()->texture->we);
+	free(get()->texture);
+	i = 0;
+	while(i < 6)
+	{
+		free(get()->images[i]);
+		i++;
+	}
+	free(get()->mlx);
+	free(get()->window);
+	free(get()->images);
 	exit(1);
 	return(1);
 }
