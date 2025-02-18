@@ -25,11 +25,9 @@ int findy(t_image *image, int height, int y)
     int x;
 
     z = (float)image->height / height;
+    if (get()->distance < 1)
+        y += ((WINDOW_HEIGHT / get()->distance - WINDOW_HEIGHT) / 2);
     x = (int)(y * z);
-    if ((WINDOW_HEIGHT / get()->distance) > WINDOW_HEIGHT && x + (WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT < image->height / 2)
-        x += ((WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT);
-    else if ((WINDOW_HEIGHT / get()->distance) > WINDOW_HEIGHT && x - (WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT > image->height / 2)
-        x -= ((WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT);
     return(x);
 }
 

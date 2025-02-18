@@ -135,8 +135,7 @@ void	create_image_ptr2(t_image **image, int i)
 		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->we, &(*image)->width, &(*image)->height);
 	if (!(*image)->img)
 	{
-		printf("%i\n", i);
-		ft_printf("ERROR\n");
+		ft_putstr_fd("Texture Path not existent\n", 2);
 		end_before();
 	}
 	create_image_addr(*image);
@@ -214,13 +213,13 @@ void	change_player(int key)
 		directionangle -= 360;
 	// checking wall colision
 	if ((get()->map[get()->py - 1][get()->px] != '1'
-		|| get()->realpy - 0.1 * sin(directionangle * (3.1415926 / 180)) > get()->py + 0.2)
+		|| get()->realpy - 0.1 * sin(directionangle * (3.1415926 / 180)) > get()->py + 0.1)
 		&& (get()->map[get()->py + 1][get()->px] != '1'
-		|| get()->realpy - 0.1 * sin(directionangle * (3.1415926 / 180)) < get()->py + 0.8))
+		|| get()->realpy - 0.1 * sin(directionangle * (3.1415926 / 180)) < get()->py + 0.9))
 			get()->realpy -= 0.1 * sin(directionangle * (3.1415926 / 180));
-	if ((get()->realpx + 0.1 * cos(directionangle * (3.1415926 / 180)) > get()->px + 0.2
+	if ((get()->realpx + 0.1 * cos(directionangle * (3.1415926 / 180)) > get()->px + 0.1
 		|| get()->map[get()->py][get()->px - 1] != '1')
-		&& (get()->realpx + 0.1 * cos(directionangle * (3.1415926 / 180)) < get()->px + 0.8
+		&& (get()->realpx + 0.1 * cos(directionangle * (3.1415926 / 180)) < get()->px + 0.9
 		|| get()->map[get()->py][get()->px + 1] != '1'))
 			get()->realpx += 0.1 * cos(directionangle * (3.1415926 / 180));
 	if (get()->realpx < get()->px)
