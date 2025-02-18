@@ -5,6 +5,7 @@ int findx(t_image *image, int side)
     float z;
     int x;
 
+    z = 0.0;
     if (get()->step_x > 0 && (side == 2 || side == 3))
         z = get()->realpx + get()->ray_dx * get()->distance;
     else if (get()->step_x < 0 && (side == 2 || side == 3))
@@ -25,6 +26,10 @@ int findy(t_image *image, int height, int y)
 
     z = (float)image->height / height;
     x = (int)(y * z);
+    if ((WINDOW_HEIGHT / get()->distance) > WINDOW_HEIGHT && x + (WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT < image->height / 2)
+        x += ((WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT);
+    else if ((WINDOW_HEIGHT / get()->distance) > WINDOW_HEIGHT && x - (WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT > image->height / 2)
+        x -= ((WINDOW_HEIGHT / get()->distance) - WINDOW_HEIGHT);
     return(x);
 }
 
@@ -38,13 +43,13 @@ void draw_vertical_line(int x, int height, int side)
     for (int y = start; y < end && y < WINDOW_HEIGHT; y++)
     {
         if (side == 0)
-            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[5], findx(get()->images[0], side), findy(get()->images[0], height, y - start), 0));
+            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[5], findx(get()->images[0], side), findy(get()->images[0], WINDOW_HEIGHT / get()->distance, y - start), 0));
         else if (side == 1)
-            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[4], findx(get()->images[0], side), findy(get()->images[0], height, y - start), 0));
+            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[4], findx(get()->images[0], side), findy(get()->images[0], WINDOW_HEIGHT / get()->distance, y - start), 0));
         else if (side == 2)
-            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[0], findx(get()->images[0], side), findy(get()->images[0], height, y - start), 0));
+            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[0], findx(get()->images[0], side), findy(get()->images[0], WINDOW_HEIGHT / get()->distance, y - start), 0));
         else if (side == 3)
-            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[1], findx(get()->images[5], side), findy(get()->images[0], height, y - start), 0));
+            my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[1], findx(get()->images[5], side), findy(get()->images[0], WINDOW_HEIGHT / get()->distance, y - start), 0));
     }
     for (int y = end; y < WINDOW_HEIGHT; y++)
         my_pixel_put(&get()->images[3], x, y, create_trgb(get()->texture->f[0], get()->texture->f[1], get()->texture->f[2]));
