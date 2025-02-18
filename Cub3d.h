@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/17 15:02:10 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:03:46 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-
 
 # define WINDOW_LENGTH 1000
 # define WINDOW_HEIGHT 800

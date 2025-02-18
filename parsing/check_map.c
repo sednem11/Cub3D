@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/17 18:14:10 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:49:30 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,12 +221,79 @@ void	get_pxy(int fd)
 	free(str);
 }
 
+void	check_textures(int fd)
+{
+	char	*temp;
+	char	*str;
+	char	**line;
+	int		check;
+	int 	check2;
+
+	check = 0;
+	check2 = 0;
+	temp = get_next_line(fd);
+	str = ft_strtrim(temp, "\n ");
+	while(temp && check_start_map(str) != 0)
+	{
+		get()->i = 0;
+		line = ft_split(str, ' ');
+		if (line[0] != NULL && strcmp(line[0], "NO") == 0)
+		{
+			check2 += 1;
+			check += 1;
+		}
+		else if (line[0] != NULL && strcmp(line[0], "SO") == 0)
+		{
+			check2 += 1;
+			check += 2;
+		}
+		else if (line[0] != NULL && strcmp(line[0], "WE") == 0)
+		{
+			check2 += 1;
+			check += 3;
+		}
+		else if (line[0] != NULL && strcmp(line[0], "EA") == 0)
+		{
+			check2 += 1;
+			check += 4;
+		}
+		else if (line[0] != NULL && strcmp(line[0], "F") == 0)
+		{
+			check2 += 1;
+			check += 5;
+		}
+		else if (line[0] != NULL && strcmp(line[0], "C") == 0)
+		{
+			check2 += 1;
+			check += 6;
+		}
+		while(line[get()->i] != NULL)
+		{
+			free(line[get()->i]);
+			get()->i++;
+		}
+		free(line);
+		free(temp);
+		free(str);
+		temp = get_next_line(fd);
+		str = ft_strtrim(temp, "\n ");
+	}
+	free(str);
+	free(temp);
+	if (check != 21 || check2 != 6)
+	{
+		ft_putstr_fd("texture missing or over initialized texture\n", 2);
+		end_before();
+	}
+}
+
 int	check_map(char *name, int fd)
 {
     int i;
 	(void) fd;
 
     i = 0;
+	check_textures(open(name, O_RDONLY));
     while(name[i] && name[i] != '.')
         i++;
     if (strcmp(&name[i], ".cub") != 0)

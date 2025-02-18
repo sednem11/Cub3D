@@ -38,17 +38,11 @@ void draw_vertical_line(int x, int height, int side)
     for (int y = start; y < end && y < WINDOW_HEIGHT; y++)
     {
         if (side == 0)
-        {
             my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[5], findx(get()->images[0], side), findy(get()->images[0], height, y - start), 0));
-        }
         else if (side == 1)
             my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[4], findx(get()->images[0], side), findy(get()->images[0], height, y - start), 0));
         else if (side == 2)
-        {
-            // findx(get()->images[0], side);
-            // my_pixel_put(&get()->images[3], x, y, create_trgb(200, 0, 0));
             my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[0], findx(get()->images[0], side), findy(get()->images[0], height, y - start), 0));
-        }
         else if (side == 3)
             my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[1], findx(get()->images[5], side), findy(get()->images[0], height, y - start), 0));
     }
