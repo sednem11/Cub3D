@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/18 16:49:07 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:11:10 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,57 +46,56 @@ typedef struct s_textures
 	int		*f;
 }	t_textures;
 
-
 typedef struct s_data
 {
-    int		map_y;
-	int		map_x;
-	int		i;
-	int		y;
-	int		x;
-	int		j;
-	int		px;
-	int		py;
-	float	calcx;
-	float	calcy;
-	float	realpy;
-	float	realpx;
-	float	fov;
-	float	angle_increment;
-	float	ray_angle;
-	float	player_angle;
-	float	distance;
-	float	ray_dx;
-	float	ray_dy;
-	float	delta_distx;
-	float	delta_disty;
-	float	side_disty;
-	float	side_distx;
-	float	heightx;
-	float	heighty;
-	int		step_x;
-	int		step_y;
-	int		wallheight;
-	int		lastx;
-	int		lasty;
-	char	**map;
+	int			map_y;
+	int			map_x;
+	int			i;
+	int			y;
+	int			x;
+	int			j;
+	int			px;
+	int			py;
+	float		calcx;
+	float		calcy;
+	float		realpy;
+	float		realpx;
+	float		fov;
+	float		angle_increment;
+	float		ray_angle;
+	float		player_angle;
+	float		distance;
+	float		ray_dx;
+	float		ray_dy;
+	float		delta_distx;
+	float		delta_disty;
+	float		side_disty;
+	float		side_distx;
+	float		heightx;
+	float		heighty;
+	int			step_x;
+	int			step_y;
+	int			wallheight;
+	int			lastx;
+	int			lasty;
+	char		**map;
 	t_textures	*texture;
-	t_image	**images;
-	void	*mlx;
-	void	*window;
-	int		width;
-	int		height;
-}   t_data;
+	t_image		**images;
+	void		*mlx;
+	void		*window;
+	int			width;
+	int			height;
+}	t_data;
 
 t_data	*get(void);
 
 void	parsing(char *name, int fd);
 void	mlx_start(void);
 int		check_start_map(char *line);
-void    raycasting();
+void	raycasting(void);
 void	my_pixel_put(t_image **image, int x, int y, int color);
 int		create_trgb(int red, int green, int blue);
 int		my_pixel_get(t_image *image, int x, int y, int i);
-int		end_before();
+int		end_before(void);
 
 #endif

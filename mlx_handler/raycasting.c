@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 15:12:48 by macampos          #+#    #+#             */
+/*   Updated: 2025/02/19 15:31:29 by macampos         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Cub3d.h"
 
 int	findx(t_image *image, int side)
@@ -35,34 +47,53 @@ void	draw_vertical_line(int x, int height, int side)
 {
 	int	start;
 	int	end;
+	int	y;
 
+	y = 0;
 	start = (WINDOW_HEIGHT / 2) - (height / 2);
 	end = start + height;
-	for (int y = 0; y < start; y++)
+	while (y < start)
+	{
 		my_pixel_put(&get()->images[3], x, y, create_trgb(get()->texture->c[0],
 				get()->texture->c[1], get()->texture->c[2]));
-	for (int y = start; y < end && y < WINDOW_HEIGHT; y++)
+		y++;
+	}
+	y = start;
+	while (y < end && y < WINDOW_HEIGHT)
 	{
 		if (side == 0)
+		{
 			my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[5],
 					findx(get()->images[0], side), findy(get()->images[0],
 						WINDOW_HEIGHT / get()->distance, y - start), 0));
+		}
 		else if (side == 1)
+		{
 			my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[4],
 					findx(get()->images[0], side), findy(get()->images[0],
 						WINDOW_HEIGHT / get()->distance, y - start), 0));
+		}
 		else if (side == 2)
+		{
 			my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[0],
 					findx(get()->images[0], side), findy(get()->images[0],
 						WINDOW_HEIGHT / get()->distance, y - start), 0));
+		}
 		else if (side == 3)
+		{
 			my_pixel_put(&get()->images[3], x, y, my_pixel_get(get()->images[1],
 					findx(get()->images[5], side), findy(get()->images[0],
 						WINDOW_HEIGHT / get()->distance, y - start), 0));
+		}
+		y++;
 	}
-	for (int y = end; y < WINDOW_HEIGHT; y++)
+	y = end;
+	while (y < WINDOW_HEIGHT)
+	{
 		my_pixel_put(&get()->images[3], x, y, create_trgb(get()->texture->f[0],
 				get()->texture->f[1], get()->texture->f[2]));
+		y++;
+	}
 }
 
 float	cast_single_ray(void)
@@ -74,12 +105,22 @@ float	cast_single_ray(void)
 	get()->calcy = get()->realpy;
 	get()->ray_dx = cos((get()->ray_angle + 0.001) * (3.1415926 / 180));
 	get()->ray_dy = sin((get()->ray_angle + 0.001) * (3.1415926 / 180));
-	get()->step_x = (get()->ray_dx < 0) ? -1 : 1;
-	get()->step_y = (get()->ray_dy < 0) ? 1 : -1;
-	get()->side_distx = (get()->step_x > 0) ? ((int)(get()->calcx + 1)
-			- get()->calcx) : (get()->calcx - (int)get()->calcx);
-	get()->side_disty = (get()->step_y > 0) ? ((int)(get()->calcy + 1)
-			- get()->calcy) : (get()->calcy - (int)get()->calcy);
+	if (get()->ray_dx < 0)
+		get()->step_x = -1;
+	else
+		get()->step_x = 1;
+	if (get()->ray_dy < 0)
+		get()->step_y = 1;
+	else
+		get()->step_y = -1;
+	if (get()->step_x > 0)
+		get()->side_distx = ((int)(get()->calcx + 1) - get()->calcx);
+	else
+		get()->side_distx = (get()->calcx - (int)get()->calcx);
+	if (get()->step_y > 0)
+		get()->side_disty = ((int)(get()->calcy + 1) - get()->calcy);
+	else
+		get()->side_disty = (get()->calcy - (int)get()->calcy);
 	dist_x = get()->side_distx / fabs(get()->ray_dx);
 	dist_y = get()->side_disty / fabs(get()->ray_dy);
 	while (1)
@@ -114,12 +155,22 @@ int	check_side(void)
 	get()->calcy = get()->realpy;
 	get()->ray_dx = cos((get()->ray_angle + 0.001) * (3.1415926 / 180));
 	get()->ray_dy = sin((get()->ray_angle + 0.001) * (3.1415926 / 180));
-	get()->step_x = (get()->ray_dx < 0) ? -1 : 1;
-	get()->step_y = (get()->ray_dy < 0) ? 1 : -1;
-	get()->side_distx = (get()->step_x > 0) ? ((int)(get()->calcx + 1)
-			- get()->calcx) : (get()->calcx - (int)get()->calcx);
-	get()->side_disty = (get()->step_y > 0) ? ((int)(get()->calcy + 1)
-			- get()->calcy) : (get()->calcy - (int)get()->calcy);
+	if (get()->ray_dx < 0)
+		get()->step_x = -1;
+	else
+		get()->step_x = 1;
+	if (get()->ray_dy < 0)
+		get()->step_y = 1;
+	else
+		get()->step_y = -1;
+	if (get()->step_x > 0)
+		get()->side_distx = ((int)(get()->calcx + 1) - get()->calcx);
+	else
+		get()->side_distx = (get()->calcx - (int)get()->calcx);
+	if (get()->step_y > 0)
+		get()->side_disty = ((int)(get()->calcy + 1) - get()->calcy);
+	else
+		get()->side_disty = (get()->calcy - (int)get()->calcy);
 	dist_x = get()->side_distx / fabs(get()->ray_dx);
 	dist_y = get()->side_disty / fabs(get()->ray_dy);
 	while (1)
@@ -154,10 +205,11 @@ int	check_side(void)
 void	raycasting(void)
 {
 	get()->angle_increment = get()->fov / WINDOW_LENGTH;
-	for (get()->x = 0; get()->x < WINDOW_LENGTH; get()->x++)
+	get()->x = 0;
+	while (get()->x < WINDOW_LENGTH)
 	{
 		get()->ray_angle = get()->player_angle + (get()->fov / 2) - (get()->x
-				* get()->angle_increment);
+			* get()->angle_increment);
 		if (get()->ray_angle < 0)
 			get()->ray_angle += 360.0f;
 		if (get()->ray_angle > 360.0f)
@@ -169,5 +221,6 @@ void	raycasting(void)
 		if (get()->wallheight > WINDOW_HEIGHT)
 			get()->wallheight = WINDOW_HEIGHT;
 		draw_vertical_line(get()->x, get()->wallheight, check_side());
+		get()->x++;
 	}
 }
