@@ -12,14 +12,14 @@
 
 #include "../Cub3d.h"
 
-int	end_before()
+int	end_before(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (get()->map)
 	{
-		while(i < get()->map_y)
+		while (i < get()->map_y)
 		{
 			free(get()->map[i]);
 			i++;
@@ -39,7 +39,7 @@ int	end_before()
 	i = 0;
 	if (get()->images)
 	{
-		while(get()->images[i] != NULL)
+		while (get()->images[i] != NULL)
 		{
 			if (get()->images[i]->img)
 				mlx_destroy_image(get()->mlx, get()->images[i]->img);
@@ -56,29 +56,29 @@ int	end_before()
 		free(get()->mlx);
 	}
 	exit(1);
-	return(1);
+	return (1);
 }
 
 void	mapy(int fd)
 {
-	int i;
-	char *temp;
-	char *str;
+	int		i;
+	char	*temp;
+	char	*str;
 
 	i = 0;
 	temp = get_next_line(fd);
 	str = ft_strtrim(temp, "\n ");
-	while(temp && check_start_map(str) != 0)
+	while (temp && check_start_map(str) != 0)
 	{
 		free(temp);
 		free(str);
 		temp = get_next_line(fd);
 		str = ft_strtrim(temp, "\n ");
 	}
-	while(1)
+	while (1)
 	{
 		if (temp == NULL)
-			break;
+			break ;
 		i++;
 		free(temp);
 		temp = get_next_line(fd);
@@ -90,24 +90,24 @@ void	mapy(int fd)
 
 void	mapx(int fd)
 {
-	int i;
-	char *temp;
-	char *str;
+	int		i;
+	char	*temp;
+	char	*str;
 
 	i = 0;
 	temp = get_next_line(fd);
 	str = ft_strtrim(temp, "\n ");
-	while(temp && check_start_map(str) != 0)
+	while (temp && check_start_map(str) != 0)
 	{
 		free(temp);
 		free(str);
 		temp = get_next_line(fd);
 		str = ft_strtrim(temp, "\n ");
 	}
-	while(1)
+	while (1)
 	{
 		if (temp == NULL)
-			break;
+			break ;
 		if (i < (int)ft_strlen(temp))
 			i = (int)ft_strlen(temp);
 		free(temp);
@@ -122,7 +122,7 @@ void	create_map(char *name)
 {
 	char	*temp;
 	char	*str;
-	int 	fd;
+	int		fd;
 	int		j;
 
 	j = 0;
@@ -132,7 +132,7 @@ void	create_map(char *name)
 	get()->map = (char **)ft_calloc((get())->map_y + 1, sizeof(char *));
 	temp = get_next_line(fd);
 	str = ft_strtrim(temp, "\n ");
-	while(check_start_map(str) != 0)
+	while (check_start_map(str) != 0)
 	{
 		free(temp);
 		free(str);
@@ -176,9 +176,9 @@ void	get_pangle(char *line)
 	get()->fov = 60;
 	if (line[get()->i] == 'W')
 		get()->player_angle = 0;
-	else if(line[get()->i] == 'E')
+	else if (line[get()->i] == 'E')
 		get()->player_angle = 180;
-	else if (line[get()->i] == 'N') 
+	else if (line[get()->i] == 'N')
 		get()->player_angle = 90;
 	else if (line[get()->i] == 'S')
 		get()->player_angle = 270;
@@ -191,17 +191,17 @@ void	get_pxy(int fd)
 
 	line = get_next_line(fd);
 	str = ft_strtrim(line, "\n ");
-	while(check_start_map(str) != 0)
+	while (check_start_map(str) != 0)
 	{
 		free(line);
 		free(str);
 		line = get_next_line(fd);
 		str = ft_strtrim(line, "\n ");
 	}
-	while(line != NULL)
+	while (line != NULL)
 	{
 		get()->i = -1;
-		while(get()->i++ < (int)ft_strlen(line))
+		while (get()->i++ < (int)ft_strlen(line))
 		{
 			if (line[get()->i] == 'E' || line[get()->i] == 'W'
 				|| line[get()->i] == 'N' || line[get()->i] == 'S')
@@ -227,13 +227,13 @@ void	check_textures(int fd)
 	char	*str;
 	char	**line;
 	int		check;
-	int 	check2;
+	int		check2;
 
 	check = 0;
 	check2 = 0;
 	temp = get_next_line(fd);
 	str = ft_strtrim(temp, "\n ");
-	while(temp && check_start_map(str) != 0)
+	while (temp && check_start_map(str) != 0)
 	{
 		get()->i = 0;
 		line = ft_split(str, ' ');
@@ -267,7 +267,7 @@ void	check_textures(int fd)
 			check2 += 1;
 			check += 6;
 		}
-		while(line[get()->i] != NULL)
+		while (line[get()->i] != NULL)
 		{
 			free(line[get()->i]);
 			get()->i++;
@@ -289,21 +289,21 @@ void	check_textures(int fd)
 
 int	check_map(char *name, int fd)
 {
-    int i;
-	(void) fd;
+	int	i;
 
-    i = 0;
+	(void)fd;
+	i = 0;
 	check_textures(open(name, O_RDONLY));
-    while(name[i] && name[i] != '.')
-        i++;
-    if (strcmp(&name[i], ".cub") != 0)
-        return(1);
-    return(0);
+	while (name[i] && name[i] != '.')
+		i++;
+	if (strcmp(&name[i], ".cub") != 0)
+		return (1);
+	return (0);
 }
 
 void	get_floor_cealing(char *line, int i)
 {
-	char **texture;
+	char	**texture;
 
 	get()->i = 0;
 	get()->j = 0;
@@ -312,7 +312,7 @@ void	get_floor_cealing(char *line, int i)
 	{
 		texture = ft_split(line, ',');
 		get()->texture->f = (int *)ft_calloc(4, sizeof(int));
-		while(get()->i < 3)
+		while (get()->i < 3)
 		{
 			get()->texture->f[get()->i] = ft_atoi(texture[get()->i]);
 			get()->j += (int)ft_strlen(texture[get()->i] + 1);
@@ -324,7 +324,7 @@ void	get_floor_cealing(char *line, int i)
 	{
 		texture = ft_split(line, ',');
 		get()->texture->c = (int *)ft_calloc(4, sizeof(int));
-		while(get()->i < 3)
+		while (get()->i < 3)
 		{
 			get()->texture->c[get()->i] = ft_atoi(texture[get()->i]);
 			get()->j += (int)ft_strlen(texture[get()->i] + 1);
@@ -337,10 +337,10 @@ void	get_floor_cealing(char *line, int i)
 
 void	get_texture_help(char *line, int i)
 {
-	char *str;
-	
+	char	*str;
+
 	get()->j = 2;
-	while(line[get()->j] && line[get()->j] == ' ')
+	while (line[get()->j] && line[get()->j] == ' ')
 		get()->j++;
 	if (line[get()->j])
 	{
@@ -364,14 +364,13 @@ void	get_texture_help(char *line, int i)
 void	get_textures(int fd)
 {
 	char	*line;
-	
+
 	line = get_next_line(fd);
 	get()->texture = (t_textures *)ft_calloc(1, sizeof(t_textures));
-	while(line != NULL)
+	while (line != NULL)
 	{
-		
 		get()->i = -1;
-		while(get()->i < (int)ft_strlen(line) && get()->i++)
+		while (get()->i < (int)ft_strlen(line) && get()->i++)
 		{
 			if (ft_strncmp(&line[get()->i], "NO ", 3) == 0)
 				get_texture_help(&line[get()->i], 0);
@@ -393,9 +392,9 @@ void	get_textures(int fd)
 
 void	parsing(char *name, int fd)
 {
-    if (check_map(name, fd) == 1)
+	if (check_map(name, fd) == 1)
 	{
-        ft_putstr_fd("map is not acording to the needs", 2);
+		ft_putstr_fd("map is not acording to the needs", 2);
 		end_before();
 	}
 	create_map(name);
@@ -403,4 +402,3 @@ void	parsing(char *name, int fd)
 	get_textures(open(name, O_RDONLY));
 	floodfill(get()->map, get()->px, get()->py);
 }
-

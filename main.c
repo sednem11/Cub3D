@@ -16,17 +16,17 @@ t_data	*get(void)
 {
 	static t_data	data;
 
-	return(&data);
+	return (&data);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    if (argc != 2 || open(argv[1], O_RDONLY) == -1)
-    {
-        ft_putstr_fd("wrong input", 2);
-        return(1);
-    }
-    parsing(argv[1], open(argv[1], O_RDONLY));
-    mlx_start();
-	return(0);
+	if (argc != 2 || open(argv[1], O_RDONLY) == -1)
+	{
+		ft_putstr_fd("wrong input", 2);
+		return (1);
+	}
+	parsing(argv[1], open(argv[1], O_RDONLY));
+	mlx_start();
+	return (0);
 }

@@ -1,24 +1,24 @@
 #include "../Cub3d.h"
 
-int create_trgb(int red, int green, int blue)
+int	create_trgb(int red, int green, int blue)
 {
-    return (red << 16) | (green << 8) | blue;
+	return ((red << 16) | (green << 8) | blue);
 }
 
-int check_start_map(char *line)
+int	check_start_map(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ')
-			return(1);
+			return (1);
 		i++;
 	}
 	if (i > 0)
-		return(0);
-	return(1);
+		return (0);
+	return (1);
 }
 
 int	my_pixel_get(t_image *image, int x, int y, int i)
@@ -68,7 +68,7 @@ void	rendering2(int positionx, int positiony)
 	int		x;
 	int		y;
 	int		color;
-	
+
 	playerpixelx = get()->realpx - positionx;
 	playerpixely = get()->realpy - positiony;
 	x = ((LENGTH * playerpixelx) - (LENGTH * 0.1));
@@ -87,17 +87,18 @@ void	rendering2(int positionx, int positiony)
 	}
 }
 
-void	rendering_map()
+void	rendering_map(void)
 {
 	get()->y = 0;
-	while(check_start_map(get()->map[get()->y]) != 0)
+	while (check_start_map(get()->map[get()->y]) != 0)
 		get()->y++;
-	while(get()->map[get()->y])
+	while (get()->map[get()->y])
 	{
 		get()->x = 0;
-		while(get()->map[get()->y][get()->x] != '\0')
+		while (get()->map[get()->y][get()->x] != '\0')
 		{
-			if (get()->map[get()->y][get()->x] == '2' || get()->map[get()->y][get()->x] == 'y')
+			if (get()->map[get()->y][get()->x] == '2'
+				|| get()->map[get()->y][get()->x] == 'y')
 				rendering(&get()->images[0], get()->x, get()->y, 0);
 			if (get()->map[get()->y][get()->x] == '1')
 				rendering(&get()->images[1], get()->x, get()->y, 0);
@@ -126,13 +127,17 @@ void	create_image_addr(t_image *image)
 void	create_image_ptr2(t_image **image, int i)
 {
 	if (i == 0)
-		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->no, &(*image)->width, &(*image)->height);
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->no,
+				&(*image)->width, &(*image)->height);
 	if (i == 1)
-		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->so, &(*image)->width, &(*image)->height);
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->so,
+				&(*image)->width, &(*image)->height);
 	if (i == 2)
-		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->ea, &(*image)->width, &(*image)->height);
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->ea,
+				&(*image)->width, &(*image)->height);
 	if (i == 3)
-		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->we, &(*image)->width, &(*image)->height);
+		(*image)->img = mlx_xpm_file_to_image(get()->mlx, get()->texture->we,
+				&(*image)->width, &(*image)->height);
 	if (!(*image)->img)
 	{
 		ft_putstr_fd("Texture Path not existent\n", 2);
@@ -152,38 +157,39 @@ void	create_image_ptr(t_image **image, int width, int height)
 	create_image_addr(*image);
 }
 
-void create_solid_color_image(t_image **image, int color)
+void	create_solid_color_image(t_image **image, int color)
 {
-    int x;
-	int y;
-	int *pixel_data;
+	int	x;
+	int	y;
+	int	*pixel_data;
 
-    (*image)->img = mlx_new_image(get()->mlx, WINDOW_LENGTH / get()->map_x, WINDOW_HEIGHT / get()->map_y);
+	(*image)->img = mlx_new_image(get()->mlx, WINDOW_LENGTH / get()->map_x,
+			WINDOW_HEIGHT / get()->map_y);
 	(*image)->width = WINDOW_LENGTH / get()->map_x;
 	(*image)->height = WINDOW_HEIGHT / get()->map_y;
-    if (!(*image)->img)
+	if (!(*image)->img)
 	{
-        printf("ERROR creating image\n");
-        end_before();
-    }
-    create_image_addr(*image);
-    pixel_data = (int *)(*image)->image_pixel;
-    for (y = 0; y < (*image)->height; y++)
+		printf("ERROR creating image\n");
+		end_before();
+	}
+	create_image_addr(*image);
+	pixel_data = (int *)(*image)->image_pixel;
+	for (y = 0; y < (*image)->height; y++)
 	{
-        for (x = 0; x < (*image)->width; x++)
+		for (x = 0; x < (*image)->width; x++)
 		{
-            pixel_data[(y * ((*image)->line_len / 4)) + x] = color;
-        }
-    }
+			pixel_data[(y * ((*image)->line_len / 4)) + x] = color;
+		}
+	}
 }
-
 
 void	init_mlx_window_images(void)
 {
 	get()->i = 0;
-	get()->window = mlx_new_window(get()->mlx, WINDOW_LENGTH, WINDOW_HEIGHT, "Cub_3D");
+	get()->window = mlx_new_window(get()->mlx, WINDOW_LENGTH, WINDOW_HEIGHT,
+			"Cub_3D");
 	get()->images = (t_image **)ft_calloc(8, sizeof(t_image *));
-	while(get()->i < 7)
+	while (get()->i < 7)
 	{
 		get()->images[get()->i] = (t_image *)calloc(1, sizeof(t_image));
 		get()->images[get()->i]->img = NULL;
@@ -212,16 +218,17 @@ void	change_player(int key)
 	if (directionangle > 360)
 		directionangle -= 360;
 	// checking wall colision
-	if ((get()->map[get()->py - 1][get()->px] != '1'
-		|| get()->realpy - 0.1 * sin(directionangle * (3.1415926 / 180)) > get()->py + 0.1)
-		&& (get()->map[get()->py + 1][get()->px] != '1'
-		|| get()->realpy - 0.1 * sin(directionangle * (3.1415926 / 180)) < get()->py + 0.9))
-			get()->realpy -= 0.1 * sin(directionangle * (3.1415926 / 180));
-	if ((get()->realpx + 0.1 * cos(directionangle * (3.1415926 / 180)) > get()->px + 0.1
-		|| get()->map[get()->py][get()->px - 1] != '1')
-		&& (get()->realpx + 0.1 * cos(directionangle * (3.1415926 / 180)) < get()->px + 0.9
-		|| get()->map[get()->py][get()->px + 1] != '1'))
-			get()->realpx += 0.1 * cos(directionangle * (3.1415926 / 180));
+	if ((get()->map[get()->py - 1][get()->px] != '1' || get()->realpy - 0.1
+			* sin(directionangle * (3.1415926 / 180)) > get()->py + 0.1)
+		&& (get()->map[get()->py + 1][get()->px] != '1' || get()->realpy - 0.1
+			* sin(directionangle * (3.1415926 / 180)) < get()->py + 0.9))
+		get()->realpy -= 0.1 * sin(directionangle * (3.1415926 / 180));
+	if ((get()->realpx + 0.1 * cos(directionangle * (3.1415926
+					/ 180)) > get()->px + 0.1 || get()->map[get()->py][get()->px
+			- 1] != '1') && (get()->realpx + 0.1 * cos(directionangle
+				* (3.1415926 / 180)) < get()->px + 0.9
+			|| get()->map[get()->py][get()->px + 1] != '1'))
+		get()->realpx += 0.1 * cos(directionangle * (3.1415926 / 180));
 	if (get()->realpx < get()->px)
 	{
 		get()->map[get()->py][get()->px] = '2';
@@ -265,9 +272,8 @@ int	handle_input(int keysym)
 	if (keysym == XK_Right)
 		get()->player_angle -= 2.5;
 	rendering_map();
-	return(1);
+	return (1);
 }
-
 
 void	mlx_start(void)
 {
