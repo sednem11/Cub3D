@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+         #
+#    By: macampos <macampos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 13:05:50 by macampos          #+#    #+#              #
-#    Updated: 2025/02/07 10:43:05 by macampos         ###   ########.fr        #
+#    Updated: 2025/02/19 17:40:27 by macampos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Cub3D
 
-SRCS = main.c parsing/check_map.c mlx_handler/start.c mlx_handler/raycasting.c #mlx_handler/raycasting.c
+SRCS = main.c parsing/check_map.c mlx_handler/start.c mlx_handler/raycasting.c mlx_handler/utils.c mlx_handler/utils2.c mlx_handler/utils3.c
 
 OBJS = $(SRCS:.c=.o)
 

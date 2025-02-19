@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/19 15:32:23 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:59:47 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cub3d.h"
+
+void	help_end(int i)
+{
+	if (get()->images)
+	{
+		while (get()->images[i] != NULL)
+		{
+			if (get()->images[i]->img)
+				mlx_destroy_image(get()->mlx, get()->images[i]->img);
+			free(get()->images[i]);
+			i++;
+		}
+		free(get()->images);
+	}
+	if (get()->mlx)
+	{
+		if (get()->window)
+			mlx_destroy_window(get()->mlx, get()->window);
+		mlx_destroy_display(get()->mlx);
+		free(get()->mlx);
+	}
+}
 
 int	end_before(void)
 {
@@ -36,25 +58,7 @@ int	end_before(void)
 		free(get()->texture->we);
 		free(get()->texture);
 	}
-	i = 0;
-	if (get()->images)
-	{
-		while (get()->images[i] != NULL)
-		{
-			if (get()->images[i]->img)
-				mlx_destroy_image(get()->mlx, get()->images[i]->img);
-			free(get()->images[i]);
-			i++;
-		}
-		free(get()->images);
-	}
-	if (get()->mlx)
-	{
-		if (get()->window)
-			mlx_destroy_window(get()->mlx, get()->window);
-		mlx_destroy_display(get()->mlx);
-		free(get()->mlx);
-	}
+	help_end(0);
 	exit(1);
 	return (1);
 }
@@ -114,22 +118,11 @@ void	mapx(int fd)
 		temp = get_next_line(fd);
 	}
 	get()->map_x = i - 1;
-	free(temp);
 	free(str);
 }
 
-void	create_map(char *name)
+void	help_create_map(char *temp, int fd, char *str, int j)
 {
-	char	*temp;
-	char	*str;
-	int		fd;
-	int		j;
-
-	j = 0;
-	fd = open(name, O_RDONLY);
-	mapy(open(name, O_RDONLY));
-	mapx(open(name, O_RDONLY));
-	get()->map = (char **)ft_calloc((get())->map_y + 1, sizeof(char *));
 	temp = get_next_line(fd);
 	str = ft_strtrim(temp, "\n ");
 	while (check_start_map(str) != 0)
@@ -149,6 +142,23 @@ void	create_map(char *name)
 	get()->map[get()->map_y] = NULL;
 	free(temp);
 	free(str);
+}
+
+void	create_map(char *name)
+{
+	char	*temp;
+	char	*str;
+	int		fd;
+	int		j;
+
+	j = 0;
+	temp = NULL;
+	str = NULL;
+	fd = open(name, O_RDONLY);
+	mapy(open(name, O_RDONLY));
+	mapx(open(name, O_RDONLY));
+	get()->map = (char **)ft_calloc((get())->map_y + 1, sizeof(char *));
+	help_create_map(temp, fd, str, j);
 }
 
 void	floodfill(char **map, int x, int y)
@@ -184,6 +194,27 @@ void	get_pangle(char *line)
 		get()->player_angle = 270;
 }
 
+void	help_get_pxy(char **line, int fd)
+{
+	while ((*line) != NULL)
+	{
+		get()->i = -1;
+		while (get()->i++ < (int)ft_strlen((*line)))
+		{
+			if ((*line)[get()->i] == 'E' || (*line)[get()->i] == 'W'
+				|| (*line)[get()->i] == 'N' || (*line)[get()->i] == 'S')
+			{
+				get()->px = get()->i;
+				get()->py = get()->j;
+				get_pangle((*line));
+			}
+		}
+		free((*line));
+		(*line) = get_next_line(fd);
+		get()->j++;
+	}
+}
+
 void	get_pxy(int fd)
 {
 	char	*line;
@@ -198,23 +229,7 @@ void	get_pxy(int fd)
 		line = get_next_line(fd);
 		str = ft_strtrim(line, "\n ");
 	}
-	while (line != NULL)
-	{
-		get()->i = -1;
-		while (get()->i++ < (int)ft_strlen(line))
-		{
-			if (line[get()->i] == 'E' || line[get()->i] == 'W'
-				|| line[get()->i] == 'N' || line[get()->i] == 'S')
-			{
-				get()->px = get()->i;
-				get()->py = get()->j;
-				get_pangle(line);
-			}
-		}
-		free(line);
-		line = get_next_line(fd);
-		get()->j++;
-	}
+	help_get_pxy(&line, fd);
 	get()->realpx = get()->px + 0.5;
 	get()->realpy = get()->py + 0.5;
 	free(line);
@@ -311,7 +326,7 @@ void	get_floor_cealing(char *line, int i)
 	if (i == 1)
 	{
 		texture = ft_split(line, ',');
-		get()->texture->f = (int *)ft_calloc(4, sizeof(int));
+		(get()->texture->f) = ft_calloc(4, sizeof(int));
 		while (get()->i < 3)
 		{
 			get()->texture->f[get()->i] = ft_atoi(texture[get()->i]);
@@ -323,7 +338,7 @@ void	get_floor_cealing(char *line, int i)
 	else if (i == 2)
 	{
 		texture = ft_split(line, ',');
-		get()->texture->c = (int *)ft_calloc(4, sizeof(int));
+		(get()->texture->c) = (int *)ft_calloc(4, sizeof(int));
 		while (get()->i < 3)
 		{
 			get()->texture->c[get()->i] = ft_atoi(texture[get()->i]);

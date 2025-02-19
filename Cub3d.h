@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/19 15:11:10 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:41:18 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 
 # define WINDOW_LENGTH 800
 # define WINDOW_HEIGHT 500
-# define HEIGHT (WINDOW_HEIGHT / get()->map_y)
-# define LENGTH (WINDOW_LENGTH / get()->map_x)
 
 typedef struct s_image
 {
@@ -73,6 +71,10 @@ typedef struct s_data
 	float		side_distx;
 	float		heightx;
 	float		heighty;
+	float		dist_x;
+	float		dist_y;
+	float		pixelx;
+	float		pixely;
 	int			step_x;
 	int			step_y;
 	int			wallheight;
@@ -94,8 +96,20 @@ void	mlx_start(void);
 int		check_start_map(char *line);
 void	raycasting(void);
 void	my_pixel_put(t_image **image, int x, int y, int color);
-int		create_trgb(int red, int green, int blue);
+int		trgb(int red, int green, int blue);
 int		my_pixel_get(t_image *image, int x, int y, int i);
 int		end_before(void);
+void	help_draw(int y, int start, int side, int x);
+int		findy(t_image *image, int height, int y);
+int		findx(t_image *image, int side);
+int		my_pixel_get(t_image *image, int x, int y, int i);
+void	my_pixel_put(t_image **image, int x, int y, int color);
+void	rendering(t_image **image, int positionx, int positiony, int i);
+void	rendering2(int positionx, int positiony);
+void	rendering_map(void);
+void	create_image_addr(t_image *image);
+void	create_image_ptr2(t_image **image, int i);
+void	create_image_ptr(t_image **image, int width, int height);
+void	create_solid_color_image(t_image **image, int color);
 
 #endif
