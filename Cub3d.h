@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/19 17:41:18 by macampos         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:58:21 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct s_data
 	void		*window;
 	int			width;
 	int			height;
+	int			check;
+	int			check2;
 }	t_data;
 
 t_data	*get(void);
@@ -111,5 +113,21 @@ void	create_image_addr(t_image *image);
 void	create_image_ptr2(t_image **image, int i);
 void	create_image_ptr(t_image **image, int width, int height);
 void	create_solid_color_image(t_image **image, int color);
+void	get_pangle(char *line);
+void	help_get_pxy(char **line, int fd);
+void	get_pxy(int fd);
+void	help_check_textures(char ***line);
+void	help_check_textures2(char ***line);
+void	cealing_texture(char ***texture, char **line);
+void	help_create_map(char *temp, int fd, char *str, int j);
+void	help_end(int i);
+int		end_before(void);
+void	get_texture_help(char *line, int i);
+void	mapy(int fd);
+void	mapx(int fd);
+void	create_map(char *name);
+void	floodfill(char **map, int x, int y);
+void	check_textures(int fd);
+void	get_floor_cealing(char *line, int i);
 
 #endif
