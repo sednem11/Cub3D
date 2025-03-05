@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:42:08 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 17:55:52 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:43:25 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	get_pangle(char *line)
 {
 	get()->fov = 60;
 	if (line[get()->i] == 'W')
-		get()->player_angle = 0;
-	else if (line[get()->i] == 'E')
 		get()->player_angle = 180;
+	else if (line[get()->i] == 'E')
+		get()->player_angle = 0;
 	else if (line[get()->i] == 'N')
 		get()->player_angle = 90;
 	else if (line[get()->i] == 'S')
