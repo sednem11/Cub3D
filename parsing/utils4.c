@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:42:08 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/20 09:50:11 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:55:52 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	get_pangle(char *line)
 
 void	help_get_pxy(char **line, int fd)
 {
+	get()->check3 = 0;
 	while ((*line) != NULL)
 	{
 		get()->i = -1;
@@ -35,6 +36,7 @@ void	help_get_pxy(char **line, int fd)
 			if ((*line)[get()->i] == 'E' || (*line)[get()->i] == 'W'
 				|| (*line)[get()->i] == 'N' || (*line)[get()->i] == 'S')
 			{
+				get()->check3 += 1;
 				get()->px = get()->i;
 				get()->py = get()->j;
 				get_pangle((*line));
@@ -65,6 +67,11 @@ void	get_pxy(int fd)
 	get()->realpy = get()->py + 0.5;
 	free(line);
 	free(str);
+	if (get()->check3 != 1)
+	{
+		ft_putstr_fd("Map does not respect needs\n", 2);
+		end_before();
+	}
 }
 
 void	help_check_textures(char ***line)
@@ -93,6 +100,7 @@ void	help_check_textures(char ***line)
 
 void	help_check_textures2(char ***line)
 {
+	get()->i = 0;
 	if ((*line)[0] != NULL && strcmp((*line)[0], "NO") == 0)
 	{
 		get()->check2 += 1;

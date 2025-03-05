@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/20 09:58:21 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:19:25 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,12 @@ typedef struct s_data
 	int			height;
 	int			check;
 	int			check2;
+	int			check3;
 }	t_data;
 
 t_data	*get(void);
 
+int		ft_strlen3(char *line);
 void	parsing(char *name, int fd);
 void	mlx_start(void);
 int		check_start_map(char *line);

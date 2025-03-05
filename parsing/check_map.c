@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/20 09:48:05 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:28:30 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,29 @@ void	get_floor_cealing(char *line, int i)
 {
 	char	**texture;
 
-	get()->i = 0;
+	get()->i = -1;
 	get()->j = 0;
+	get()->check3 = 0;
 	texture = NULL;
 	if (i == 1)
 	{
 		texture = ft_split(line, ',');
 		(get()->texture->f) = ft_calloc(4, sizeof(int));
-		while (get()->i < 3)
+		while (++get()->i < 3)
 		{
+			if (ft_strlen3(texture[get()->i]) != -1
+				|| ft_atoi(texture[get()->i]) > 255)
+				get()->check3 = 1;
 			get()->texture->f[get()->i] = ft_atoi(texture[get()->i]);
 			get()->j += (int)ft_strlen(texture[get()->i] + 1);
 			free(texture[get()->i]);
-			get()->i++;
 		}
 	}
 	else if (i == 2)
 		cealing_texture(&texture, &line);
 	free(texture);
+	if (get()->check3 == 1)
+		end_before();
 }
 
 void	get_textures(int fd)
@@ -81,6 +86,7 @@ void	get_textures(int fd)
 
 void	parsing(char *name, int fd)
 {
+	get()->j = 0;
 	if (check_map(name, fd) == 1)
 	{
 		ft_putstr_fd("map is not acording to the needs", 2);
@@ -90,4 +96,15 @@ void	parsing(char *name, int fd)
 	get_pxy(open(name, O_RDONLY));
 	get_textures(open(name, O_RDONLY));
 	floodfill(get()->map, get()->px, get()->py);
+	while (get()->map[get()->j])
+	{
+		get()->i = 0;
+		while (get()->map[get()->j][get()->i])
+		{
+			if (get()->map[get()->j][get()->i] == '0')
+				floodfill(get()->map, get()->i, get()->j);
+			get()->i++;
+		}
+		get()->j++;
+	}
 }

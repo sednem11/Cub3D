@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utlis6.c                                           :+:      :+:    :+:   */
+/*   utils6.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:47:12 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/20 09:53:59 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:56:14 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ void	create_map(char *name)
 
 void	floodfill(char **map, int x, int y)
 {
-	if (map[y][x] == '1' || map[y][x] == '2' || map[y][x] == 'w'
-		|| map[y][x] == 'n' || map[y][x] == 's' || map[y][x] == 'e'
-		|| map[y][x] == 'y')
+	if (map[y][x] == '1' || map[y][x] == '2' || map[y][x] == 'N'
+		|| map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W')
 		return ;
-	if (!map[y][x] || map[y][x] == ' ' || y <= 0 || x <= 0)
+	if (!map[y][x] || (map[y][x] != '0' && map[y][x] != 'N'
+		&& map[y][x] != 'S' && map[y][x] != 'E' && map[y][x] != 'W')
+		|| y <= 0 || x <= 0)
 	{
 		printf("dead flood\n");
 		end_before();
 	}
-	map[get()->py][get()->px] = 'y';
 	if (map[y][x] == '0')
 		map[y][x] = '2';
 	floodfill(map, (x + 1), y);
@@ -119,7 +119,6 @@ void	check_textures(int fd)
 	str = ft_strtrim(temp, "\n ");
 	while (temp && check_start_map(str) != 0)
 	{
-		get()->i = 0;
 		line = ft_split(str, ' ');
 		help_check_textures2(&line);
 		free(temp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:43:17 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/20 09:52:15 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:28:42 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ void	cealing_texture(char ***texture, char **line)
 {
 	(*texture) = ft_split((*line), ',');
 	(get()->texture->c) = (int *)ft_calloc(4, sizeof(int));
-	while (get()->i < 3)
+	while (++get()->i < 3)
 	{
+		if (ft_strlen3((*texture)[get()->i]) != -1)
+		{
+			free((*texture)[get()->i]);
+			free((*texture));
+			end_before();
+		}
 		get()->texture->c[get()->i] = ft_atoi((*texture)[get()->i]);
 		get()->j += (int)ft_strlen((*texture)[get()->i] + 1);
 		free((*texture)[get()->i]);
-		get()->i++;
 	}
 }
 

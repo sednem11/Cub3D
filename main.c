@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
+/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:44:43 by macampos          #+#    #+#             */
-/*   Updated: 2025/01/17 18:34:09 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:18:52 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@ t_data	*get(void)
 	static t_data	data;
 
 	return (&data);
+}
+
+int	ft_strlen3(char *line)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (line[i] && line[i] != '\n')
+	{
+		if (line[i] == ' ')
+			j++;
+		i++;
+	}
+	if (j > 0 || i > 3)
+		return (j);
+	return (-1);
 }
 
 int	main(int argc, char **argv)
