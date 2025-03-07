@@ -6,11 +6,25 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:43:17 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 18:28:42 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:14:52 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cub3d.h"
+
+int		is_all_num(char *str)
+{
+	int i;
+	
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] != 10 && (str[i] > 57 || str[i] < 48))
+			return 1;
+		i++;
+	}
+	return 0;
+}
 
 void	cealing_texture(char ***texture, char **line)
 {
@@ -18,12 +32,10 @@ void	cealing_texture(char ***texture, char **line)
 	(get()->texture->c) = (int *)ft_calloc(4, sizeof(int));
 	while (++get()->i < 3)
 	{
-		if (ft_strlen3((*texture)[get()->i]) != -1)
-		{
-			free((*texture)[get()->i]);
-			free((*texture));
-			end_before();
-		}
+		if (ft_strlen3((*texture)[get()->i]) != -1
+			|| ft_atoi((*texture)[get()->i]) > 255
+			|| is_all_num((*texture)[get()->i]) != 0)
+			get()->check3 = 1;
 		get()->texture->c[get()->i] = ft_atoi((*texture)[get()->i]);
 		get()->j += (int)ft_strlen((*texture)[get()->i] + 1);
 		free((*texture)[get()->i]);
@@ -75,11 +87,13 @@ void	help_end(int i)
 	}
 }
 
-int	end_before(void)
+int	end_before(char *line)
 {
 	int	i;
 
 	i = 0;
+	if (line)
+		free(line);
 	if (get()->map)
 	{
 		while (i < get()->map_y)
@@ -104,7 +118,7 @@ int	end_before(void)
 	return (1);
 }
 
-void	get_texture_help(char *line, int i)
+void	get_texture_help(char *line, int i, char *line2)
 {
 	char	*str;
 
@@ -122,10 +136,10 @@ void	get_texture_help(char *line, int i)
 			get()->texture->so = ft_strdup(str);
 		else if (i == 3)
 			get()->texture->we = ft_strdup(str);
-		else if (i == 4)
-			get_floor_cealing(&line[get()->j], 1);
-		else if (i == 5)
-			get_floor_cealing(&line[get()->j], 2);
 		free(str);
+		if (i == 4)
+			get_floor_cealing(&line[get()->j], 1, line2);
+		else if (i == 5)
+			get_floor_cealing(&line[get()->j], 2, line2);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 19:00:03 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:56:43 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	raycasting(void);
 void	my_pixel_put(t_image **image, int x, int y, int color);
 int		trgb(int red, int green, int blue);
 int		my_pixel_get(t_image *image, int x, int y, int i);
-int		end_before(void);
+int		end_before(char *line);
 void	help_draw(int y, int start, int side, int x);
 int		findy(t_image *image, int height, int y);
 int		findx(t_image *image, int side);
@@ -123,13 +123,13 @@ void	help_check_textures2(char ***line);
 void	cealing_texture(char ***texture, char **line);
 void	help_create_map(char *temp, int fd, char *str, int j);
 void	help_end(int i);
-int		end_before(void);
-void	get_texture_help(char *line, int i);
+void	get_texture_help(char *line, int i, char *line2);
 void	mapy(int fd);
 void	mapx(int fd);
 void	create_map(char *name);
 void	floodfill(char **map, int x, int y);
 void	check_textures(int fd);
-void	get_floor_cealing(char *line, int i);
+void	get_floor_cealing(char *line, int i, char *line2);
+int		is_all_num(char *str);
 
 #endif

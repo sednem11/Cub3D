@@ -1,15 +1,17 @@
-NO textures/blue.xpm
-SO textures/green.xpm
-EA textures/Purple.xpm
-WE textures/Purple.xpm
+NO textures/green.xpm
+SO textures/blue.xpm
+
 
 F 150,150,150
 C 0,0,0
 
+EA textures/Purple.xpm
+WE textures/Purple.xpm
+
 111111111111111
 1000000000000011111
 1000000000000000001
-11110000000N0000111
+11110000000W0000111
 1000000000000000001
 1111111111111000001
 10001   10000000011

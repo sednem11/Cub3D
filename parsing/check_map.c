@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 18:28:30 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:21:53 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_map(char *name, int fd)
 	return (0);
 }
 
-void	get_floor_cealing(char *line, int i)
+void	get_floor_cealing(char *line, int i, char *line2)
 {
 	char	**texture;
 
@@ -41,7 +41,8 @@ void	get_floor_cealing(char *line, int i)
 		while (++get()->i < 3)
 		{
 			if (ft_strlen3(texture[get()->i]) != -1
-				|| ft_atoi(texture[get()->i]) > 255)
+				|| ft_atoi(texture[get()->i]) > 255
+				|| is_all_num(texture[get()->i]) != 0)
 				get()->check3 = 1;
 			get()->texture->f[get()->i] = ft_atoi(texture[get()->i]);
 			get()->j += (int)ft_strlen(texture[get()->i] + 1);
@@ -52,7 +53,7 @@ void	get_floor_cealing(char *line, int i)
 		cealing_texture(&texture, &line);
 	free(texture);
 	if (get()->check3 == 1)
-		end_before();
+		end_before(line2);
 }
 
 void	get_textures(int fd)
@@ -67,17 +68,17 @@ void	get_textures(int fd)
 		while (get()->i < (int)ft_strlen(line) && get()->i++)
 		{
 			if (ft_strncmp(&line[get()->i], "NO ", 3) == 0)
-				get_texture_help(&line[get()->i], 0);
+				get_texture_help(&line[get()->i], 0, line);
 			else if (ft_strncmp(&line[get()->i], "EA ", 3) == 0)
-				get_texture_help(&line[get()->i], 1);
+				get_texture_help(&line[get()->i], 1, line);
 			else if (ft_strncmp(&line[get()->i], "SO ", 3) == 0)
-				get_texture_help(&line[get()->i], 2);
+				get_texture_help(&line[get()->i], 2, line);
 			else if (ft_strncmp(&line[get()->i], "WE ", 3) == 0)
-				get_texture_help(&line[get()->i], 3);
+				get_texture_help(&line[get()->i], 3, line);
 			else if (ft_strncmp(&line[get()->i], "F ", 2) == 0)
-				get_texture_help(&line[get()->i], 4);
+				get_texture_help(&line[get()->i], 4, line);
 			else if (ft_strncmp(&line[get()->i], "C ", 2) == 0)
-				get_texture_help(&line[get()->i], 5);
+				get_texture_help(&line[get()->i], 5, line);
 		}
 		free(line);
 		line = get_next_line(fd);
@@ -90,7 +91,7 @@ void	parsing(char *name, int fd)
 	if (check_map(name, fd) == 1)
 	{
 		ft_putstr_fd("map is not acording to the needs", 2);
-		end_before();
+		end_before(NULL);
 	}
 	create_map(name);
 	get_pxy(open(name, O_RDONLY));

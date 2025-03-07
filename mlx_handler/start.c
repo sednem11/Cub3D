@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:19 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 14:51:29 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:48:37 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	change_player(int key)
 int	handle_input(int keysym)
 {
 	if (keysym == XK_Escape)
-		end_before();
+		end_before(NULL);
 	if (keysym == XK_w)
 		change_player(1);
 	if (keysym == XK_a)

@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:42:08 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 18:43:25 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:48:37 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	get_pxy(int fd)
 	if (get()->check3 != 1)
 	{
 		ft_putstr_fd("Map does not respect needs\n", 2);
-		end_before();
+		end_before(NULL);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:38:46 by macampos          #+#    #+#             */
-/*   Updated: 2025/02/19 17:41:08 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:48:37 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_image_addr(t_image *image)
 	if (!image->image_pixel)
 	{
 		ft_printf("image_pixel");
-		end_before();
+		end_before(NULL);
 	}
 }
 
@@ -40,7 +40,7 @@ void	create_image_ptr2(t_image **image, int i)
 	if (!(*image)->img)
 	{
 		ft_putstr_fd("Texture Path not existent\n", 2);
-		end_before();
+		end_before(NULL);
 	}
 	create_image_addr(*image);
 }
@@ -51,7 +51,7 @@ void	create_image_ptr(t_image **image, int width, int height)
 	if (!(*image)->img)
 	{
 		ft_printf("ERROR\n");
-		end_before();
+		end_before(NULL);
 	}
 	create_image_addr(*image);
 }
@@ -69,7 +69,7 @@ void	create_solid_color_image(t_image **image, int color)
 	if (!(*image)->img)
 	{
 		printf("ERROR creating image\n");
-		end_before();
+		end_before(NULL);
 	}
 	create_image_addr(*image);
 	pixel_data = (int *)(*image)->image_pixel;

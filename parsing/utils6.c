@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:47:12 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 17:56:14 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:48:37 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	floodfill(char **map, int x, int y)
 		|| y <= 0 || x <= 0)
 	{
 		printf("dead flood\n");
-		end_before();
+		end_before(NULL);
 	}
 	if (map[y][x] == '0')
 		map[y][x] = '2';
@@ -131,6 +131,6 @@ void	check_textures(int fd)
 	if (get()->check != 21 || get()->check2 != 6)
 	{
 		ft_putstr_fd("texture missing or over initialized texture\n", 2);
-		end_before();
+		end_before(NULL);
 	}
 }

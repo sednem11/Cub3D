@@ -6,7 +6,7 @@
 /*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:34:45 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/05 18:57:22 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:29:58 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ void	rendering_map(void)
 		get()->y++;
 	}
 	raycasting();
-	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[3]->img, 0,
+	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[2]->img, 0,
 		0);
 }
