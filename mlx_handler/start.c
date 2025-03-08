@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:19 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/07 19:48:37 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:04:20 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	handle_input(int keysym)
 	if (keysym == XK_Right)
 		get()->player_angle -= 2.5;
 	rendering_map();
+	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[3]->img, 0,
+		0);
 	return (1);
 }
 
@@ -113,6 +115,8 @@ void	mlx_start(void)
 	get()->mlx = mlx_init();
 	init_mlx_window_images();
 	rendering_map();
+	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[3]->img, 0,
+		0);
 	mlx_hook(get()->window, 2, (1L << 0), handle_input, NULL);
 	mlx_hook(get()->window, 17, 0, end_before, NULL);
 	mlx_loop(get()->mlx);

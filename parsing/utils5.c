@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:43:17 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/07 20:14:52 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:17:58 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cub3d.h"
-
-int		is_all_num(char *str)
-{
-	int i;
-	
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] != 10 && (str[i] > 57 || str[i] < 48))
-			return 1;
-		i++;
-	}
-	return 0;
-}
 
 void	cealing_texture(char ***texture, char **line)
 {
@@ -85,6 +71,12 @@ void	help_end(int i)
 		mlx_destroy_display(get()->mlx);
 		free(get()->mlx);
 	}
+	if (get()->texture)
+	{
+		free(get()->texture->so);
+		free(get()->texture->we);
+		free(get()->texture);
+	}
 }
 
 int	end_before(char *line)
@@ -109,9 +101,6 @@ int	end_before(char *line)
 		free(get()->texture->f);
 		free(get()->texture->ea);
 		free(get()->texture->no);
-		free(get()->texture->so);
-		free(get()->texture->we);
-		free(get()->texture);
 	}
 	help_end(0);
 	exit(1);
@@ -136,6 +125,8 @@ void	get_texture_help(char *line, int i, char *line2)
 			get()->texture->so = ft_strdup(str);
 		else if (i == 3)
 			get()->texture->we = ft_strdup(str);
+		else
+			get()->i = -1;
 		free(str);
 		if (i == 4)
 			get_floor_cealing(&line[get()->j], 1, line2);

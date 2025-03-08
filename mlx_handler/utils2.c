@@ -6,7 +6,7 @@
 /*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:34:45 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/08 20:48:39 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:04:25 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ void	rendering_map(void)
 		while (get()->map[get()->y][get()->x] != '\0')
 		{
 			if (get()->map[get()->y][get()->x] == '2'
-				|| get()->map[get()->y][get()->x] == 'y' || get()->map[get()->y][get()->x] == 'N'
-				|| get()->map[get()->y][get()->x] == 'E' || get()->map[get()->y][get()->x] == 'S'
+				|| get()->map[get()->y][get()->x] == 'y'
+				|| get()->map[get()->y][get()->x] == 'N'
+				|| get()->map[get()->y][get()->x] == 'E'
+				|| get()->map[get()->y][get()->x] == 'S'
 				|| get()->map[get()->y][get()->x] == 'W')
 			{
 				rendering(&get()->images[0], get()->x, get()->y, 0);
@@ -107,6 +109,4 @@ void	rendering_map(void)
 		}
 		get()->y++;
 	}
-	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[3]->img, 0,
-		0);
 }

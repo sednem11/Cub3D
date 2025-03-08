@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:49:53 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/07 20:21:53 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:13:29 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	get_floor_cealing(char *line, int i, char *line2)
 {
 	char	**texture;
 
-	get()->i = -1;
 	get()->j = 0;
 	get()->check3 = 0;
 	texture = NULL;
