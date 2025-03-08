@@ -3,7 +3,7 @@ SO textures/blue.xpm
 
 
 F 150,150,150
-C 0,0,0
+C 150,150,150
 
 EA textures/Purple.xpm
 WE textures/Purple.xpm

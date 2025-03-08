@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:42:28 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/07 19:56:43 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:28:50 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+# define WINDOW_LENGTH2 200
+# define WINDOW_HEIGHT2 200
 
 # define WINDOW_LENGTH 800
 # define WINDOW_HEIGHT 500

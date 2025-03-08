@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macampos <macampos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macampos <mcamposmendes@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:34:45 by macampos          #+#    #+#             */
-/*   Updated: 2025/03/07 20:29:58 by macampos         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:48:39 by macampos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void	rendering(t_image **image, int positionx, int positiony, int i)
 	int	color;
 
 	y = 0;
-	while (y < WINDOW_HEIGHT / get()->map_y)
+	while (y < WINDOW_HEIGHT2 / get()->map_y)
 	{
 		x = 0;
-		while (x < WINDOW_LENGTH / get()->map_x)
+		while (x < WINDOW_LENGTH2 / get()->map_x)
 		{
 			color = my_pixel_get((*image), x, y, i);
 			if (color != -16777216)
-				my_pixel_put(&get()->images[2], x + (WINDOW_LENGTH
-						/ get()->map_x * positionx), y + (WINDOW_HEIGHT
-						/ get()->map_y * positiony), color);
+				my_pixel_put(&get()->images[3], x + (WINDOW_LENGTH2
+						/ get()->map_x * positionx) + 20, y + (WINDOW_HEIGHT2
+						/ get()->map_y * positiony) + 10, color);
 			x++;
 		}
 		y++;
@@ -61,22 +61,22 @@ void	rendering2(int positionx, int positiony)
 
 	get()->pixelx = get()->realpx - positionx;
 	get()->pixely = get()->realpy - positiony;
-	x = ((WINDOW_LENGTH / get()->map_x * get()->pixelx) - (WINDOW_LENGTH
+	x = ((WINDOW_LENGTH2 / get()->map_x * get()->pixelx) - (WINDOW_LENGTH2
 				/ get()->map_x * 0.1));
-	y = ((WINDOW_HEIGHT / get()->map_y * get()->pixely) - (WINDOW_HEIGHT
+	y = ((WINDOW_HEIGHT2 / get()->map_y * get()->pixely) - (WINDOW_HEIGHT2
 				/ get()->map_y * 0.1));
-	while (y++ < ((WINDOW_HEIGHT / get()->map_y * get()->pixely)
-			+ (WINDOW_HEIGHT / get()->map_y * 0.1)))
+	while (y++ < ((WINDOW_HEIGHT2 / get()->map_y * get()->pixely)
+			+ (WINDOW_HEIGHT2 / get()->map_y * 0.1)))
 	{
-		x = ((WINDOW_LENGTH / get()->map_x * get()->pixelx) - (WINDOW_LENGTH
+		x = ((WINDOW_LENGTH2 / get()->map_x * get()->pixelx) - (WINDOW_LENGTH2
 					/ get()->map_x * 0.1));
-		while (x < ((WINDOW_LENGTH / get()->map_x * get()->pixelx)
-				+ (WINDOW_LENGTH / get()->map_x * 0.1)))
+		while (x < ((WINDOW_LENGTH2 / get()->map_x * get()->pixelx)
+				+ (WINDOW_LENGTH2 / get()->map_x * 0.1)))
 		{
 			color = trgb(200, 0, 0);
-			my_pixel_put(&get()->images[2], x + (WINDOW_LENGTH / get()->map_x
-					* positionx), y + (WINDOW_HEIGHT / get()->map_y
-					* positiony), color);
+			my_pixel_put(&get()->images[3], x + (WINDOW_LENGTH2 / get()->map_x
+					* positionx) + 20, y + (WINDOW_HEIGHT2 / get()->map_y
+					* positiony) + 10, color);
 			x++;
 		}
 	}
@@ -84,6 +84,7 @@ void	rendering2(int positionx, int positiony)
 
 void	rendering_map(void)
 {
+	raycasting();
 	get()->y = 0;
 	while (check_start_map(get()->map[get()->y]) != 0)
 		get()->y++;
@@ -93,17 +94,19 @@ void	rendering_map(void)
 		while (get()->map[get()->y][get()->x] != '\0')
 		{
 			if (get()->map[get()->y][get()->x] == '2'
-				|| get()->map[get()->y][get()->x] == 'y')
+				|| get()->map[get()->y][get()->x] == 'y' || get()->map[get()->y][get()->x] == 'N'
+				|| get()->map[get()->y][get()->x] == 'E' || get()->map[get()->y][get()->x] == 'S'
+				|| get()->map[get()->y][get()->x] == 'W')
+			{
 				rendering(&get()->images[0], get()->x, get()->y, 0);
+				rendering2(get()->x, get()->y);
+			}
 			if (get()->map[get()->y][get()->x] == '1')
 				rendering(&get()->images[1], get()->x, get()->y, 0);
-			if (get()->map[get()->y][get()->x] == 'y')
-				rendering2(get()->x, get()->y);
 			get()->x++;
 		}
 		get()->y++;
 	}
-	raycasting();
-	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[2]->img, 0,
+	mlx_put_image_to_window(get()->mlx, get()->window, get()->images[3]->img, 0,
 		0);
 }
